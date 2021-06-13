@@ -1,0 +1,34 @@
+public class hilos extends Thread {
+    public hilos (String str) {
+   	 super (str);
+    }
+    
+    static long baseTime = System.currentTimeMillis();
+   	 
+    static void showElapsedTime(String message) {
+    	long elapsedTime = System.currentTimeMillis() -baseTime;
+    	System.out.println(message + " at " + (elapsedTime/1000.0) + " seconds");
+    }
+
+    
+    public void run() {
+   	 showElapsedTime("Inicio del" + getName());
+    	for(int i=0; i<5; i++) { 	 
+   		 try {
+   			 Thread.sleep(1000);
+   			 System.out.println(i + " " + getName());
+   		 } catch (InterruptedException e) {
+   			 e.printStackTrace();
+   		 }
+    	}
+    	showElapsedTime("Fin del" + getName());
+    }
+      
+    public static void main(String[] args ) throws InterruptedException {
+   		 Thread p1 = new hilos("Proceso 1");
+   	   	 Thread p2 = new hilos("Proceso 2");
+   	   	 p1.start();
+   	   	 p1.join();
+   	   	 p2.start();
+   	}
+}
